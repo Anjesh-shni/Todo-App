@@ -5,7 +5,7 @@ import 'package:todo_app/utils/constant/colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await init();
+  // await init();
   runApp(const MyApp());
 }
 
