@@ -1,22 +1,27 @@
-import 'dart:io';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:todo_app/features/presentation/bloc/app_level_bloc/app_bloc.dart';
-import 'package:hive/hive.dart';
+import 'package:todo_app/features/presentation/bloc/task_bloc/task_bloc.dart';
 
 /*
 Get_it package used for dependency injection.
 */
 
-final serviceLocator = GetIt.instance;
+final getIt = GetIt.instance;
+//Init function
 Future<void> init() async {
   debugPrint("=======Dependecy injected=======");
-  //
-  var path = Directory.current.path;
-  Hive.init(path);
-  // ignore: unused_local_variable
-  var box = await Hive.openBox('todo');
-  //
-  serviceLocator.registerSingleton<ApplicationBloc>(ApplicationBloc());
-  //
+  //local storage facility
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorage.webStorageDirectory
+        : await getTemporaryDirectory(),
+  );
+  //Application Bloc will used to control bottom navigatiionBar
+  getIt.registerSingleton<ApplicationBloc>(ApplicationBloc());
+
+  //Task Bloc handle Task create,delete,update.
+  getIt.registerSingleton<TaskBloc>(TaskBloc());
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:todo_app/features/presentation/pages/edit_page.dart';
-import '../features/presentation/pages/home_page.dart';
+import 'package:todo_app/features/data/model/task_model.dart';
+import 'package:todo_app/features/presentation/pages/homeScreen/edit_notes_screen.dart';
+import '../features/presentation/pages/homeScreen/add_notes_screen.dart';
+import '../features/presentation/pages/homeScreen/home_screen.dart';
 
 /*
 The reason, i'm using Go_router instead of normal routing or list routing
@@ -18,17 +20,33 @@ final GoRouter router = GoRouter(
       path: '/',
       name: "home",
       builder: (BuildContext context, GoRouterState state) {
-        return const HomeScreen();
+        return const HomePage();
       },
       routes: [
         GoRoute(
-          path: 'editScreen',
+          path: 'addNotes',
+          name: "addNotes",
+          builder: (BuildContext context, GoRouterState state) {
+            return const AddNotesPage();
+          },
+        ),
+        GoRoute(
+          path: 'edit',
           name: "editScreen",
           builder: (BuildContext context, GoRouterState state) {
-            return const EditScreen();
+            return EditNotes(
+              oldTask: state.extra as Task,
+            );
           },
         ),
       ],
+
+      /*
+      // redirect:
+
+       we will be using redirect pages incase of need any validation like,
+      login validation if something you don't to give permisions without logged in,
+      */
     ),
   ],
 );

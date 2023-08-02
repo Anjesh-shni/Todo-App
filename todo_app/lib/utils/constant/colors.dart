@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -8,7 +9,7 @@ class AppColors {
   static const primary = Color(0xff262626);
   static const primaryBg = Color(0xfff5f5fd);
   static const secondaryBg = Color(0xffececf6);
-  static const barBg = Color(0xffe3e3ee);
+  static const barBg = Color.fromARGB(255, 78, 78, 78);
 
  static List<Color> backgroundColors = [
     const Color(0xFFCCE5FF), // light blue
@@ -22,4 +23,9 @@ class AppColors {
     const Color(0xFFD4EDDA), // mint green
     const Color(0xFFFFF3CD), // pale orange
   ];
+  static getRandomColor() {
+    Random random = Random();
+    return AppColors
+        .backgroundColors[random.nextInt(AppColors.backgroundColors.length)];
+  }
 }
